@@ -1,0 +1,16 @@
+{
+    "name": "oldman7979/minerva",
+    "autoload": {
+        "psr-4": {
+            "Oldman7979\\Minerva\\": "src/",
+            "app\\": "app/"            
+        }
+    },
+    "authors": [
+        {
+            "name": "oldman",
+            "email": "oldm2563@email.com"
+        }
+    ],
+    "require": {}
+}
