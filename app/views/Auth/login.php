@@ -10,6 +10,9 @@
         <input type="email" name="email">
         <input type="password" name="password">
         <input type="submit">
+        <?php if(!empty($error)): ?>
+        <p><?= $error[0] ?></p>
+        <?php endif ?>
     </form>
 </body>
 </html>

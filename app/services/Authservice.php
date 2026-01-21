@@ -9,14 +9,14 @@ use app\models\User;
             $info = new User("", "", $email , $password , "");
             $found = $info->getinfo();
             if(empty($found)){
-                return "wrong email";
+                return ["Email Not Found"];
             }
             else{
                 if($password === $found['password']){
                     return $found['role'];
                 }
                 else{
-                    return 'password is correct';
+                    return ['Password Is Incorrect'];
                 }
             }
             

@@ -6,7 +6,8 @@ use app\core\Controller;
     class AuthController extends Controller{
         
         public function loginform(){
-            $this->render("Auth/login");
+            $error = [];
+            $this->render("Auth/login", ['error' => $error]);
         }
         public function Login(){
             $auth = new Authservice();
@@ -15,7 +16,7 @@ use app\core\Controller;
                 $this->redirect($redirect);
             }
             else{
-                echo $redirect;
+                $this->render("Auth/login", ['error' => $redirect]);
             }
         }
     }
