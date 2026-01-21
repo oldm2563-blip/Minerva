@@ -1,4 +1,5 @@
 <?php
+use app\core\Database;
 
 class Attendance
 {

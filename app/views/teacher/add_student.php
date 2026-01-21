@@ -6,6 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hi non Students</h1>
+    <h1>Adding Students</h1>
 </body>
 </html>
