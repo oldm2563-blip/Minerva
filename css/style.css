@@ -1,0 +1,412 @@
+/* style.css */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6a8cc5;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --border-color: #dee2e6;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+}
+
+.sidebar-nav {
+    padding: 20px 0;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: 12px 20px;
+    color: var(--dark-color);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #f8f9fa;
+    border-left-color: var(--primary-color);
+}
+
+.nav-link.active {
+    background-color: #e9ecef;
+    border-left-color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.user-info {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Content Sections */
+.content-section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--dark-color);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Checkbox styling */
+.form-group label input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Links in auth forms */
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: var(--dark-color);
+}
+
+/* Chat */
+.chat-container {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.message.received {
+    background-color: #f8f9fa;
+    border-left: 3px solid var(--primary-color);
+}
+
+.message.sent {
+    background-color: #e9ecef;
+    border-right: 3px solid var(--primary-color);
+    margin-left: 20px;
+}
+
+.message-header {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+}
+
+.message-time {
+    color: #6c757d;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.message-content {
+    color: #333;
+}
+
+.chat-input {
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.chat-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-primary {
+    background-color: #e3f2fd;
+    color: var(--primary-color);
+}
+
+.badge-success {
+    background-color: #d4edda;
+    color: var(--success-color);
+}
+
+.badge-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-danger {
+    background-color: #f8d7da;
+    color: var(--danger-color);
+}
+
+/* Auth Pages */
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7fa;
+}
+
+.auth-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .auth-card {
+        margin: 20px;
+        padding: 30px;
+    }
+     .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
