@@ -12,16 +12,14 @@ class User
     private PDO $db;
 
     public function __construct(
-         $id,
          $username,
          $email,
          $password,
          $role
     ) {
-        $this->id       = $id;
         $this->username = $username;
         $this->email    = $email;
-        $this->password = $password;
+        $this->password = password_hash('123456', PASSWORD_DEFAULT);
         $this->role     = $role;
         $this->db = Database::getInstance();
     }

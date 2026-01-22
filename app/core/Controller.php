@@ -14,21 +14,21 @@
             require $viewpage;
         }
 
-
-
-        function redirect($view, $data = []){
-            header('Location: ' . $view);
+        function redirect($path)
+        {
+            header('Location: /' . ltrim($path, '/'));
+            exit;
         }
 
         public function IsSignedIn(){
-            if(!isset($_SESSION['user'])){
+            if(!isset($_SESSION['name'])){
                 session_destroy();
                 $this->redirect('/login');
             }
         }
 
         public function SingedIn(){
-            if(isset($_SESSION['user'])){
+            if(isset($_SESSION['name'])){
                 $this->redirect('/');
             }
         }
