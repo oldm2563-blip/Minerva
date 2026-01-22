@@ -10,3 +10,4 @@ $routes = [
 
 $router->route($routes);
 ?>
+
