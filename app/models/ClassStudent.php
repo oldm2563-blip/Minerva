@@ -1,11 +1,11 @@
 <?php
 namespace app\models;
 
+
 use app\core\Database;
 use PDO;
 
 class ClassStudent {
-    private int $id;
     private int $student_id;
     private int $class_id;
 
@@ -24,21 +24,23 @@ class ClassStudent {
         $this->class_id = $class_id;
     }
 
+    
+
   
-    public function assignToClass(int $student_id, int $class_id): bool {
+    public function assignToClass( $student_id,  $class_id) {
         $stmt = $this->db->prepare("
-            INSERT INTO class_student (student_id, class_id) VALUES (:student_id, :class_id)
+            INSERT INTO class_students (student_id, class_id) VALUES (:student_id, :class_id)
         ");
-        return $stmt->execute([
+        $stmt->execute([
             ':student_id' => $student_id,
             ':class_id' => $class_id
         ]);
     }
 
    
-    public function getStatus(): string {
+    public function getStatus() {
         $stmt = $this->db->prepare("
-            SELECT * FROM class_student WHERE student_id = :student_id AND class_id = :class_id
+            SELECT * FROM class_students WHERE student_id = :student_id AND class_id = :class_id
         ");
         $stmt->execute([
             ':student_id' => $this->student_id,
@@ -55,15 +57,15 @@ class ClassStudent {
     }
 
    
-    public function getStudentsByClass(int $class_id): array {
-        $stmt = $this->db->prepare("SELECT * FROM class_student WHERE class_id = :class_id");
+    public function getStudentsByClass(int $class_id) {
+        $stmt = $this->db->prepare("SELECT * FROM class_students WHERE class_id = :class_id");
         $stmt->execute([':class_id' => $class_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     
-    public function getClassesByStudent(int $student_id): array {
-        $stmt = $this->db->prepare("SELECT * FROM class_student WHERE student_id = :student_id");
+    public function getClassesByStudent(int $student_id) {
+        $stmt = $this->db->prepare("SELECT * FROM class_students WHERE student_id = :student_id");
         $stmt->execute([':student_id' => $student_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

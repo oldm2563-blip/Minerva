@@ -1,25 +1,30 @@
 <?php
+namespace app\models;
+use app\core\Database;
+
 
 class Grade
 {
-    private int $id;
-    private int $submissionId;
-    private float $grade;
-    private ?string $comment;
-    private string $gradedAt;
+    private  $id;
+    private  $submissionId;
+    private  $grade;
+    private  $comment;
+    private  $gradedAt;
+    private $db;
 
     public function __construct(
-        int $id,
-        int $submissionId,
-        float $grade,
-        ?string $comment,
-        string $gradedAt
+         $id,
+         $submissionId,
+         $grade,
+         $comment,
+         $gradedAt
     ) {
         $this->id           = $id;
         $this->submissionId = $submissionId;
         $this->grade        = $grade;
         $this->comment      = $comment;
         $this->gradedAt     = $gradedAt;
+        $this->db = Database::getInstance();
     }
 
    
@@ -48,19 +53,12 @@ class Grade
         return $this->gradedAt;
     }
 
-    
-    public function assignGrade(
-        float $grade,
-        ?string $comment,
-        GradeService $gradeService
-    ): bool {
-        $this->grade   = $grade;
-        $this->comment = $comment;
-
-        return $gradeService->assign(
-            $this->submissionId,
-            $grade,
-            $comment
-        );
+    public function grade(){
+        $stmt = $this->db->prepare("INSERT INTO grades (submission_id ,grade , comment) VALUES (?, ?, ?)");
+        $stmt->execute([$this->submissionId, $this->grade, $this->comment]);
+    }
+    public function showgrade($id){
+        $stmt = $this->db->prepare("SELECT * WHERE submission_id = ?");
+        $stmt->execute([$id]);
     }
 }

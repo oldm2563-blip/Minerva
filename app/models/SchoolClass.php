@@ -1,19 +1,22 @@
 <?php
+namespace app\models;
+use app\core\Database;
+use PDO;
 
 class SchoolClass
 {
-    private int $id;
-    private string $name;
-    private int $teacherId;
+    private $id;
+    private $name;
+    private $teacherId;
+    private PDO $db;
 
     public function __construct(
-        int $id,
-        string $name,
-        int $teacherId
+         $name,
+         $teacherId
     ) {
-        $this->id        = $id;
         $this->name      = $name;
         $this->teacherId = $teacherId;
+        $this->db = Database::getInstance();
     }
 
 
@@ -31,34 +34,16 @@ class SchoolClass
     {
         return $this->teacherId;
     }
-
-
-    public function addStudents(
-        array $studentIds,
-        ClassService $classService
-    ): bool {
-        return $classService->addStudents(
-            $this->id,
-            $studentIds
-        );
-    }
-
-    public function removeStudent(
-        int $studentId,
-        ClassService $classService
-    ): bool {
-        return $classService->removeStudent(
-            $this->id,
-            $studentId
-        );
-    }
-
     
-    public function viewStudents(
-        ClassService $classService
-    ): array {
-        return $classService->getStudentsByClass(
-            $this->id
-        );
+    public function showclasses($id){
+        $stmt = $this->db->prepare("SELECT * FROM classes WHERE teacher_id = ?");
+        $stmt->execute([$id]);
+        $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $classes;
+    }
+    
+    public function createclass(){
+        $stmt = $this->db->prepare("INSERT INTO classes (name, teacher_id) VALUES (? , ?)");
+        $stmt->execute([$this->name , $this->teacherId]);
     }
 }

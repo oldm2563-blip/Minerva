@@ -2,7 +2,6 @@
     "name": "oldman7979/minerva",
     "autoload": {
         "psr-4": {
-            "Oldman7979\\Minerva\\": "src/",
             "app\\": "app/"            
         }
     },

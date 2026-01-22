@@ -1,18 +1,21 @@
 <?php
+namespace app\models;
+use app\core\Database;
+use app\models\User;
+use PDO;
 
 class Student extends User
 {
-    private int $classId;
+    private  $classId;
+    private $db;
 
     public function __construct(
-        int $id,
-        string $username,
-        string $email,
-        string $password,
-        int $classId
+         $username,
+         $email,
+         $password,
     ) {
-        parent::__construct($id, $username, $email, $password, 'student');
-        $this->classId = $classId;
+        parent::__construct($username, $email, $password, 'student');
+        $this->db = Database::getInstance();
     }
 
   
@@ -21,42 +24,12 @@ class Student extends User
         return $this->classId;
     }
 
-   
-    public function submitWork(
-        int $workId,
-        string $content,
-        SubmissionService $submissionService
-    ): bool {
-        return $submissionService->submit(
-            $workId,
-            $this->id,
-            $content
-        );
+    public function addstudent(){
+        $stmt = $this->db->prepare("INSERT INTO users (name, email, password, role) VALUES (?,?,?,?)");
+        $stmt->execute([$this->username,$this->email,$this->password,$this->role]);
     }
-
-    
-    public function viewGrades(
-        GradeService $gradeService
-    ): array {
-        return $gradeService->getGradesByStudent($this->id);
-    }
-
-   
-    public function message(
-        string $message,
-        ChatService $chatService
-    ): bool {
-        return $chatService->sendMessage(
-            $this->id,
-            $this->classId,
-            $message
-        );
-    }
-
-   
-    public function viewClass(
-        ClassService $classService
-    ): array {
-        return $classService->getClassDetails($this->classId);
+    public function allstudents(){
+        $stmt = $this->db->query("SELECT * FROM users WHERE role = 'student'");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

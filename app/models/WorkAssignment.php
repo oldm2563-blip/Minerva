@@ -5,9 +5,9 @@ use app\core\Database;
 use PDO;
 
 class WorkAssignment {
-    private int $id;
-    private int $work_id;
-    private int $student_id;
+    private  $id;
+    private  $work_id;
+    private  $student_id;
 
     private PDO $db;
 
@@ -44,7 +44,7 @@ class WorkAssignment {
     }
 
     
-    public function assignToStudent(int $work_id, int $student_id): bool {
+    public function assignToStudent( $work_id,  $student_id) {
         $stmt = $this->db->prepare("
             INSERT INTO work_assignments (work_id, student_id) VALUES (:work_id, :student_id)
         ");
