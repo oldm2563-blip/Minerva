@@ -1,6 +1,7 @@
 <?php
+namespace app\models;
 use app\core\Database;
-
+use PDO;
 
 class Work
 {
@@ -13,75 +14,86 @@ class Work
     private string $dueDate;
     private string $createdAt;
 
+    private PDO $db;
+
     public function __construct(
-        int $id,
-        int $classId,
-        int $teacherId,
-        string $title,
-        string $description,
-        ?string $filePath,
-        string $dueDate,
-        string $createdAt
+         $id,
+         $classId,
+         $teacherId,
+         $title,
+         $description,
+         $filePath,
+         $dueDate,
+         $createdAt
     ) {
         $this->id          = $id;
         $this->classId     = $classId;
-        $this->teacherId  = $teacherId;
+        $this->teacherId   = $teacherId;
         $this->title       = $title;
         $this->description = $description;
         $this->filePath    = $filePath;
         $this->dueDate     = $dueDate;
         $this->createdAt   = $createdAt;
+        $this->db = Database::getInstance();
     }
 
-  
-    public function getId(): int
+    public function create()
     {
-        return $this->id;
+        $stmt = $this->db->prepare("
+            INSERT INTO works (class_id, teacher_id, title, description, file_path, due_date)
+            VALUES (:class_id, :teacher_id, :title, :description, :file_path, :due_date)
+        ");
+        return $stmt->execute([
+            ':class_id'     => $this->classId,
+            ':teacher_id'   => $this->teacherId,
+            ':title'        => $this->title,
+            ':description'  => $this->description,
+            ':file_path'    => $this->filePath,
+            ':due_date'     => $this->dueDate
+        ]);
     }
 
-    public function getClassId(): int
+    public function read(int $id): ?self
     {
-        return $this->classId;
-    }
+        $stmt = $this->db->prepare("SELECT * FROM works WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    public function getTeacherId(): int
-    {
-        return $this->teacherId;
-    }
+        if (!$data) return null;
 
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function getFilePath(): ?string
-    {
-        return $this->filePath;
-    }
-
-    public function getDueDate(): string
-    {
-        return $this->dueDate;
-    }
-
-    public function getCreatedAt(): string
-    {
-        return $this->createdAt;
-    }
-
-  
-    public function assignToStudent(
-        int $studentId,
-        WorkAssignmentService $assignmentService
-    ): bool {
-        return $assignmentService->assign(
-            $this->id,
-            $studentId
+        return new self(
+            $data['id'],
+            $data['class_id'],
+            $data['teacher_id'],
+            $data['title'],
+            $data['description'],
+            $data['file_path'],
+            $data['due_date'],
+            $data['created_at']
         );
     }
+
+    public function update(): bool
+    {
+        $stmt = $this->db->prepare("
+            UPDATE works SET
+                class_id = :class_id,
+                teacher_id = :teacher_id,
+                title = :title,
+                description = :description,
+                file_path = :file_path,
+                due_date = :due_date
+            WHERE id = :id
+        ");
+        return $stmt->execute([
+            ':class_id'    => $this->classId,
+            ':teacher_id'  => $this->teacherId,
+            ':title'       => $this->title,
+            ':description' => $this->description,
+            ':file_path'   => $this->filePath,
+            ':due_date'    => $this->dueDate,
+            ':id'          => $this->id
+        ]);
+    }
+
 }
