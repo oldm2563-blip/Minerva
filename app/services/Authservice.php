@@ -13,6 +13,8 @@ use app\models\User;
             }
             else{
                 if($password === $found['password']){
+                    $_SESSION['name'] = $found['name'];
+                    $_SESSION['id'] = $found['id'];
                     return $found['role'];
                 }
                 else{
