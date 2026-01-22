@@ -5,17 +5,21 @@ use app\core\Database;
 use PDO;
 
 class Submission {
-    private int $id;
-    private int $work_id;
-    private int $student_id;
-    private string $content;
-    private ?string $file_path;
-    private string $submitted_at;
+    private  $id;
+    private  $work_id;
+    private  $student_id;
+    private  $content;
+    private  $file_path;
+    private  $submitted_at;
 
     private PDO $db;
 
-    public function __construct() {
-      
+    public function __construct($work_id,$student_id, $content,$file_path,$submitted_at) {
+        $this->work_id = $work_id;
+        $this->student_id = $student_id;
+        $this->content = $content;
+        $this->file_path = $file_path;
+        $this->submitted_at = $submitted_at;
         $this->db = Database::getInstance();
     }
 
@@ -45,7 +49,7 @@ class Submission {
     }
 
     
-    public function submit(): bool {
+    public function submit() {
         $this->submitted_at = date('Y-m-d H:i:s');
 
         $stmt = $this->db->prepare("
