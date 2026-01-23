@@ -59,4 +59,8 @@ use app\services\StudentService;
             $grade->grade();
             $this->redirect('teacher');
         }
+        public function setattendance(){
+            $set = new ClassService();
+            $set->attendance();
+        }
     }

@@ -50,22 +50,4 @@ class ChatMessage
         return $this->createdAt;
     }
 
-   
-    public function send(
-        ChatService $chatService
-    ): bool {
-        return $chatService->sendMessage(
-            $this->userId,
-            $this->classId,
-            $this->message
-        );
-    }
-
-    
-    public static function getHistory(
-        int $classId,
-        ChatService $chatService
-    ): array {
-        return $chatService->getMessagesByClass($classId);
-    }
 }
