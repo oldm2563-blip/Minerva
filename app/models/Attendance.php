@@ -1,25 +1,26 @@
 <?php
+namespace app\models;
 use app\core\Database;
-
+use PDO;
 class Attendance
 {
-    private int $id;
-    private int $classId;
-    private int $studentId;
-    private string $date;
-    private string $status; 
+    private  $id;
+    private  $classId;
+    private  $studentId;
+    private  $date;
+    private  $status; 
+    private $db;
     public function __construct(
-        int $id,
-        int $classId,
-        int $studentId,
-        string $date,
-        string $status
+         $id,
+         $classId,
+         $studentId,
+         $date,
     ) {
         $this->id        = $id;
         $this->classId   = $classId;
         $this->studentId = $studentId;
         $this->date      = $date;
-        $this->status    = $status;
+        $this->db = Database::getInstance();
     }
 
   
@@ -48,25 +49,18 @@ class Attendance
         return $this->status;
     }
 
-   
-    public function markPresent(
-        AttendanceService $attendanceService
-    ): bool {
+   public function present(){
         $this->status = 'present';
-        return $attendanceService->updateStatus(
-            $this->id,
-            'present'
-        );
-    }
-
-    
-    public function markAbsent(
-        AttendanceService $attendanceService
-    ): bool {
+        $stmt = $this->db->prepare('INSERT INTO attendance (class_id, student_id, date, status) VALUES(? ,? ,? ,?)');
+        $stmt->execute([$this->classId,$this->studentId,$this->date]);
+   }
+   public function absent(){
         $this->status = 'absent';
-        return $attendanceService->updateStatus(
-            $this->id,
-            'absent'
-        );
-    }
+        $stmt = $this->db->prepare('INSERT INTO attendance (class_id, student_id, date, status) VALUES(? ,? ,NOW() ,?)');
+        $stmt->execute([$this->classId,$this->studentId,$this->status]);
+   }
+   public function checkstatus(){
+        $stmt = $this->db->query('SELECT * FROM attendance');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+   }
 }

@@ -6,11 +6,25 @@
     use app\models\ClassStudent;
     use app\models\WorkAssignment;
     use app\models\Submission;
+    use app\services\MailerService;
     class StudentService{
         
     public function addstudent(){
         $name = $_POST['name'];
         $email = $_POST['email'];
+        $subject = "Bienvenue sur Minerva";
+        $body = "
+            Bonjour $name,<br><br>
+            Votre compte étudiant a été créé.<br>
+            Vous pouvez vous connecter avec les identifiants suivants : <br>
+            <br>
+            Email: $email<br>
+            Mot de passe: 123456<br>
+            <br>
+          
+        ";
+        $mail = new MailerService();
+        $mail->send($email, $subject, $body);
         $add = new Student($name, $email, "");
         $add->addstudent();
     }
