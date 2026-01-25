@@ -3,27 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évaluation des Travaux</title>
-    <link rel="stylesheet" href="../../../css/style.css">
+    <title>Évaluation - Enseignant</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+<style>
+    /* style.css */
+:root {
+    --primary: #4a6fa5;
+    --bg: #f4f6f8;
+    --white: #ffffff;
+    --dark: #2c2c2c;
+    --border: #e0e0e0;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    min-height: 100vh;
+}
+
+/* Layout */
+.sidebar {
+    width: 240px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: var(--primary);
+    color: white;
+    text-align: center;
+}
+
+.sidebar-nav {
+    padding: 10px;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: 12px;
+    color: var(--dark);
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: #eef2f7;
+    color: var(--primary);
+}
+
+/* Main */
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: var(--white);
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+}
+
+/* Sections */
+.content-section {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    background: var(--primary);
+    color: white;
+}
+
+.btn-success { background: var(--success); }
+.btn-danger  { background: var(--danger); }
+.btn-warning { background: var(--warning); color: #000; }
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.table th {
+    background: #f0f2f5;
+    text-align: left;
+}
+
+/* Alerts */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.alert-success { background: #e6f4ea; color: var(--success); }
+.alert-danger  { background: #fbeaea; color: var(--danger); }
+.alert-warning { background: #fff4e5; color: #856404; }
+.alert-info    { background: #e8f4f8; color: var(--info); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+</style>
 <body>
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>Espace Enseignant</h1>
+                <p><?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></p>
             </div>
             
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item"><a href="dashboard.php" class="nav-link">Tableau de bord</a></li>
-                    <li class="nav-item"><a href="classes.php" class="nav-link">Mes Classes</a></li>
-                    <li class="nav-item"><a href="works.php" class="nav-link">Travaux</a></li>
-                    <li class="nav-item"><a href="evaluation.php" class="nav-link active">Évaluation</a></li>
-                    <li class="nav-item"><a href="attendance.php" class="nav-link">Présences</a></li>
-                    <li class="nav-item"><a href="statistics.php" class="nav-link">Statistiques</a></li>
-                    <li class="nav-item"><a href="chat.php" class="nav-link">Chat</a></li>
-                    <li class="nav-item"><a href="../Auth/login.php" class="nav-link">Déconnexion</a></li>
+                    <li class="nav-item"><a href="/teacher" class="nav-link">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="/teacher/classes" class="nav-link">Mes Classes</a></li>
+                    <li class="nav-item"><a href="/teacher/works" class="nav-link">Travaux</a></li>
+                    <li class="nav-item"><a href="/teacher/evaluation" class="nav-link active">Évaluation</a></li>
+                    <li class="nav-item"><a href="/teacher/attendance" class="nav-link">Présences</a></li>
+                    <li class="nav-item"><a href="/teacher/statistics" class="nav-link">Statistiques</a></li>
+                    <li class="nav-item"><a href="/teacher/chat" class="nav-link">Chat</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Déconnexion</a></li>
                 </ul>
             </nav>
         </aside>
@@ -31,57 +210,144 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="header">
-                <h1>Évaluation des Travaux</h1>
-                <div class="user-info">Bienvenue, Prof. Martin</div>
+                <h1>Évaluation des travaux</h1>
+                <div class="user-info">Bienvenue, <?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></div>
             </div>
 
             <div class="content-section">
-                <!-- À évaluer -->
-                <h2 class="section-title">À évaluer (1)</h2>
+                <h2 class="section-title">Travaux à évaluer</h2>
                 
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="margin-bottom: 5px;">Lucas Bernard</h3>
-                            <p style="color: #6c757d; margin-bottom: 10px;">Exercices sur les équations du second degré</p>
-                            <p>Voici mes réponses aux exercices.</p>
-                        </div>
-                        <span class="badge badge-warning">À évaluer</span>
-                    </div>
-                    
-                    <div style="margin: 15px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
-                        <small>Soumis le 21/01/2026 à 10:15</small>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn btn-success">Évaluer</button>
-                        <button class="btn btn-secondary">Télécharger</button>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Étudiant</th>
+                                <th>Travail</th>
+                                <th>Classe</th>
+                                <th>Date de soumission</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($pendingEvaluations) && !empty($pendingEvaluations)): ?>
+                                <?php foreach ($pendingEvaluations as $evaluation): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($evaluation['student_name'] ?? '') ?></td>
+                                        <td><?= htmlspecialchars($evaluation['work_title'] ?? '') ?></td>
+                                        <td><?= htmlspecialchars($evaluation['class_name'] ?? '') ?></td>
+                                        <td><?= date('d/m/Y', strtotime($evaluation['submitted_at'] ?? '')) ?></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" onclick="showEvaluationForm(<?= $evaluation['submission_id'] ?>)">Évaluer</button>
+                                            <button class="btn btn-sm btn-secondary">Voir le travail</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px;">
+                                        <div class="alert alert-info" style="margin-bottom: 0;">
+                                            Aucune évaluation en attente. Les soumissions d'étudiants apparaîtront ici.
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <!-- Évalués -->
-                <h2 class="section-title" style="margin-top: 40px;">Évalués (1)</h2>
+            <!-- Evaluation Form (Hidden by default) -->
+            <div id="evaluationForm" class="content-section" style="display: none;">
+                <h2 class="section-title">Évaluer le travail</h2>
                 
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="margin-bottom: 5px;">Sophie Dubois</h3>
-                            <p style="color: #6c757d; margin-bottom: 10px;">Exercices sur les équations du second degré</p>
-                            <p style="font-style: italic;">Excellent travail !</p>
+                <form action="/teacher/grade" method="POST">
+                    <input type="hidden" name="submission_id" id="submission_id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Note</label>
+                            <input type="number" class="form-control" name="grade" min="0" max="20" step="0.5" placeholder="15.5" required>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; font-weight: bold; color: var(--success-color);">18/20</div>
-                            <small>Évalué le 19/01/2026</small>
+                        <div class="form-group">
+                            <label class="form-label">Appréciation</label>
+                            <select class="form-control" name="appreciation">
+                                <option value="">Sélectionnez une appréciation</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Très bien">Très bien</option>
+                                <option value="Bien">Bien</option>
+                                <option value="Assez bien">Assez bien</option>
+                                <option value="Passable">Passable</option>
+                                <option value="Insuffisant">Insuffisant</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn">Modifier</button>
-                        <button class="btn btn-secondary">Voir détails</button>
+                    <div class="form-group">
+                        <label class="form-label">Commentaire</label>
+                        <textarea class="form-control" name="comment" placeholder="Commentaires détaillés sur le travail..." rows="4"></textarea>
                     </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn">Enregistrer l'évaluation</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideEvaluationForm()">Annuler</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">Évaluations récentes</h2>
+                
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Étudiant</th>
+                                <th>Travail</th>
+                                <th>Note</th>
+                                <th>Appréciation</th>
+                                <th>Date d'évaluation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($completedEvaluations) && !empty($completedEvaluations)): ?>
+                                <?php foreach ($completedEvaluations as $evaluation): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($evaluation['student_name'] ?? '') ?></td>
+                                        <td><?= htmlspecialchars($evaluation['work_title'] ?? '') ?></td>
+                                        <td><strong><?= htmlspecialchars($evaluation['grade'] ?? '') ?>/20</strong></td>
+                                        <td><?= htmlspecialchars($evaluation['appreciation'] ?? $evaluation['comment'] ?? '') ?></td>
+                                        <td><?= date('d/m/Y', strtotime($evaluation['graded_at'] ?? '')) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px;">
+                                        <div class="alert alert-info" style="margin-bottom: 0;">
+                                            Aucune évaluation complétée. Les évaluations terminées apparaîtront ici.
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        function showEvaluationForm(submissionId) {
+            const form = document.getElementById('evaluationForm');
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth' });
+            
+            // Set the submission ID
+            document.getElementById('submission_id').value = submissionId;
+        }
+
+        function hideEvaluationForm() {
+            document.getElementById('evaluationForm').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

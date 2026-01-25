@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Classes - Enseignant</title>
+    <title>Assigner des étudiants - Enseignant</title>
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        /* style.css */
+</head>
+<style>
+    /* style.css */
 :root {
     --primary: #4a6fa5;
     --bg: #f4f6f8;
@@ -182,23 +183,7 @@ body {
     }
 }
 
-        .hidden {
-            display: none;
-        }
-
-        .student-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .student-card {
-            background-color: #f8f9fa;
-            padding: 12px;
-            border-radius: 4px;
-        }
-    </style>
-</head>
+</style>
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -211,7 +196,7 @@ body {
             <nav class="sidebar-nav">
                 <ul>
                     <li class="nav-item"><a href="/teacher" class="nav-link">Tableau de bord</a></li>
-                    <li class="nav-item"><a href="/teacher/classes" class="nav-link active">Mes Classes</a></li>
+                    <li class="nav-item"><a href="/teacher/classes" class="nav-link">Mes Classes</a></li>
                     <li class="nav-item"><a href="/teacher/works" class="nav-link">Travaux</a></li>
                     <li class="nav-item"><a href="/teacher/evaluation" class="nav-link">Évaluation</a></li>
                     <li class="nav-item"><a href="/teacher/attendance" class="nav-link">Présences</a></li>
@@ -225,11 +210,13 @@ body {
         <!-- Main Content -->
         <main class="main-content">
             <div class="header">
-                <h1>Mes Classes</h1>
+                <h1>Assigner des étudiants</h1>
                 <div class="user-info">Bienvenue, <?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></div>
             </div>
 
             <div class="content-section">
+                <h2 class="section-title">Assigner des étudiants à une classe</h2>
+                
                 <?php if (isset($error) && !empty($error)): ?>
                     <div class="alert alert-danger">
                         <?php foreach ($error as $err): ?>
@@ -244,78 +231,110 @@ body {
                     </div>
                 <?php endif; ?>
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 class="section-title">Liste des classes</h2>
-                    <a href="/teacher/addclass" class="btn">Créer une nouvelle classe</a>
-                </div>
-
-                <?php if (isset($classes) && !empty($classes)): ?>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nom de la classe</th>
-                                    <th>Date de création</th>
-                                    <th>Nombre d'étudiants</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                <form action="/teacher/assign" method="POST">
+                    <div class="form-group">
+                        <label class="form-label">Sélectionnez une classe</label>
+                        <select class="form-control" name="class_id" required>
+                            <option value="">Sélectionnez une classe</option>
+                            <?php if (isset($classes) && !empty($classes)): ?>
                                 <?php foreach ($classes as $class): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($class['name'] ?? '') ?></td>
-                                        <td><?= htmlspecialchars($class['created_at'] ?? '') ?></td>
-                                        <td><?= htmlspecialchars($class['student_count'] ?? 0) ?></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary" onclick="toggleStudents(<?= $class['id'] ?? '' ?>)">
-                                                Voir les étudiants
-                                            </button>
-                                            <a href="/teacher/assignwork" class="btn btn-sm btn-secondary">Assigner un travail</a>
-                                        </td>
-                                    </tr>
-                                    <tr id="students-<?= $class['id'] ?? '' ?>" class="hidden">
-                                        <td colspan="4">
-                                            <div class="student-list">
-                                                <?php if (!empty($class['students'])): ?>
-                                                    <?php foreach ($class['students'] as $student): ?>
-                                                        <div class="student-card">
-                                                            <strong><?= htmlspecialchars($student['name'] ?? '') ?></strong><br>
-                                                            Email: <?= htmlspecialchars($student['email'] ?? '') ?>
-                                                        </div>
-                                                    <?php endforeach; ?>
-                                                <?php else: ?>
-                                                    <p>Aucun étudiant assigné à cette classe.</p>
-                                                <?php endif; ?>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <option value="<?= $class['id'] ?? '' ?>">
+                                        <?= htmlspecialchars($class['name'] ?? '') ?>
+                                    </option>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                            <?php endif; ?>
+                        </select>
                     </div>
-                <?php else: ?>
-                    <div class="alert alert-info">
-                        Aucune classe trouvée. <a href="/teacher/addclass" class="btn btn-sm">Créer votre première classe</a>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Sélectionnez les étudiants à assigner</label>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selectAllStudents" onchange="toggleAllStudents()">
+                                            Sélectionner
+                                        </th>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Classe actuelle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (isset($students) && !empty($students)): ?>
+                                        <?php foreach ($students as $student): ?>
+                                            <tr>
+                                                <td><input type="checkbox" name="students[]" value="<?= $student['id'] ?? '' ?>"></td>
+                                                <td><?= htmlspecialchars($student['name'] ?? '') ?></td>
+                                                <td><?= htmlspecialchars($student['email'] ?? '') ?></td>
+                                                <td><?= htmlspecialchars($student['current_class'] ?? 'Non assigné') ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="4">Aucun étudiant disponible</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                <?php endif; ?>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn">Assigner les étudiants</button>
+                        <a href="/teacher/classes" class="btn btn-secondary" style="text-decoration: none;">Annuler</a>
+                    </div>
+                </form>
             </div>
 
             <div class="content-section">
-                <h2 class="section-title">Actions rapides</h2>
-                <div class="grid grid-2">
-                    <a href="/teacher/addstudent" class="btn" style="text-decoration: none; text-align: center;">Ajouter un étudiant</a>
-                    <a href="/teacher/assign" class="btn" style="text-decoration: none; text-align: center;">Assigner des étudiants</a>
-                    <a href="/teacher/works" class="btn" style="text-decoration: none; text-align: center;">Créer un travail</a>
-                    <a href="/teacher/attendance" class="btn" style="text-decoration: none; text-align: center;">Faire l'appel</a>
+                <h2 class="section-title">Assignations récentes</h2>
+                
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Étudiant</th>
+                                <th>Classe</th>
+                                <th>Date d'assignation</th>
+                                <th>Assigné par</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sophie Dubois</td>
+                                <td>3ème A</td>
+                                <td>20/01/2026</td>
+                                <td><?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></td>
+                            </tr>
+                            <tr>
+                                <td>Lucas Bernard</td>
+                                <td>3ème B</td>
+                                <td>19/01/2026</td>
+                                <td><?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></td>
+                            </tr>
+                            <tr>
+                                <td>Marie Martin</td>
+                                <td>3ème A</td>
+                                <td>18/01/2026</td>
+                                <td><?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        function toggleStudents(classId) {
-            const row = document.getElementById('students-' + classId);
-            row.classList.toggle('hidden');
+        function toggleAllStudents() {
+            const selectAll = document.getElementById('selectAllStudents');
+            const checkboxes = document.querySelectorAll('input[name="students[]"]');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
         }
     </script>
 </body>

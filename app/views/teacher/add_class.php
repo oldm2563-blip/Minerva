@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord - Enseignant</title>
+    <title>Ajouter une classe - Enseignant</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <style>
@@ -195,7 +195,7 @@ body {
             
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item"><a href="/teacher" class="nav-link active">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="/teacher" class="nav-link">Tableau de bord</a></li>
                     <li class="nav-item"><a href="/teacher/classes" class="nav-link">Mes Classes</a></li>
                     <li class="nav-item"><a href="/teacher/works" class="nav-link">Travaux</a></li>
                     <li class="nav-item"><a href="/teacher/evaluation" class="nav-link">Évaluation</a></li>
@@ -210,80 +210,43 @@ body {
         <!-- Main Content -->
         <main class="main-content">
             <div class="header">
-                <h1>Tableau de bord</h1>
+                <h1>Ajouter une classe</h1>
                 <div class="user-info">Bienvenue, <?= htmlspecialchars($_SESSION['name'] ?? 'Professeur') ?></div>
             </div>
 
             <div class="content-section">
-                <h2 class="section-title">Aperçu</h2>
+                <h2 class="section-title">Créer une nouvelle classe</h2>
                 
-                <div class="grid grid-4">
-                    <div class="card">
-                        <h3>Classes</h3>
-                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);"><?= htmlspecialchars($stats['total_classes'] ?? 0) ?></p>
+                <form action="/teacher/addclass" method="POST">
+                    <div class="form-group">
+                        <label class="form-label">Nom de la classe</label>
+                        <input type="text" class="form-control" name="name" placeholder="ex: 3ème A" required>
                     </div>
                     
-                    <div class="card">
-                        <h3>Étudiants</h3>
-                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);"><?= htmlspecialchars($stats['total_students'] ?? 0) ?></p>
+                    <div class="form-group">
+                        <label class="form-label">Niveau</label>
+                        <select class="form-control" name="level" required>
+                            <option value="">Sélectionnez un niveau</option>
+                            <option value="6ème">6ème</option>
+                            <option value="5ème">5ème</option>
+                            <option value="4ème">4ème</option>
+                            <option value="3ème">3ème</option>
+                            <option value="Seconde">Seconde</option>
+                            <option value="Première">Première</option>
+                            <option value="Terminale">Terminale</option>
+                        </select>
                     </div>
                     
-                    <div class="card">
-                        <h3>Travaux actifs</h3>
-                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);"><?= htmlspecialchars($stats['active_works'] ?? 0) ?></p>
+                    <div class="form-group">
+                        <label class="form-label">Description (optionnel)</label>
+                        <textarea class="form-control" name="description" placeholder="Description de la classe..." rows="3"></textarea>
                     </div>
                     
-                    <div class="card">
-                        <h3>À évaluer</h3>
-                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);"><?= htmlspecialchars($stats['pending_evaluations'] ?? 0) ?></p>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn">Créer la classe</button>
+                        <a href="/teacher/classes" class="btn btn-secondary" style="text-decoration: none;">Annuler</a>
                     </div>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h2 class="section-title">Actions rapides</h2>
-                
-                <div class="grid grid-2">
-                    <a href="/teacher/addclass" class="btn" style="text-decoration: none; text-align: center;">Créer une classe</a>
-                    <a href="/teacher/addstudent" class="btn" style="text-decoration: none; text-align: center;">Ajouter un étudiant</a>
-                    <a href="/teacher/works" class="btn" style="text-decoration: none; text-align: center;">Créer un travail</a>
-                    <a href="/teacher/attendance" class="btn" style="text-decoration: none; text-align: center;">Faire l'appel</a>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <h2 class="section-title">Dernières activités</h2>
-                
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Activité</th>
-                                <th>Classe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (isset($activities) && !empty($activities)): ?>
-                                <?php foreach ($activities as $activity): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($activity['date'] ?? '') ?></td>
-                                        <td><?= htmlspecialchars($activity['activity'] ?? '') ?></td>
-                                        <td><?= htmlspecialchars($activity['class_name'] ?? '') ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr>
-                                    <td colspan="3" style="text-align: center; padding: 40px;">
-                                        <div class="alert alert-info" style="margin-bottom: 0;">
-                                            Aucune activité récente. Commencez par créer une classe ou ajouter des étudiants.
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                </form>
             </div>
         </main>
     </div>
