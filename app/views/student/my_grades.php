@@ -4,24 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Notes - Étudiant</title>
-    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+<style>
+    /* style.css */
+:root {
+    --primary: #4a6fa5;
+    --bg: #f4f6f8;
+    --white: #ffffff;
+    --dark: #2c2c2c;
+    --border: #e0e0e0;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    min-height: 100vh;
+}
+
+/* Layout */
+.sidebar {
+    width: 240px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    height: 100vh;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: var(--primary);
+    color: white;
+    text-align: center;
+}
+
+.sidebar-nav {
+    padding: 10px;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: 12px;
+    color: var(--dark);
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: #eef2f7;
+    color: var(--primary);
+}
+
+/* Main */
+.main-content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: var(--white);
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+}
+
+/* Sections */
+.content-section {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    background: var(--primary);
+    color: white;
+}
+
+.btn-success { background: var(--success); }
+.btn-danger  { background: var(--danger); }
+.btn-warning { background: var(--warning); color: #000; }
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.table th {
+    background: #f0f2f5;
+    text-align: left;
+}
+
+/* Alerts */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.alert-success { background: #e6f4ea; color: var(--success); }
+.alert-danger  { background: #fbeaea; color: var(--danger); }
+.alert-warning { background: #fff4e5; color: #856404; }
+.alert-info    { background: #e8f4f8; color: var(--info); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+</style>
 <body>
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>Espace Étudiant</h1>
+                <p><?= htmlspecialchars($_SESSION['name'] ?? 'Étudiant') ?></p>
             </div>
             
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item"><a href="dashboard.php" class="nav-link">Tableau de bord</a></li>
-                    <li class="nav-item"><a href="my_classes.php" class="nav-link">Mes Classes</a></li>
-                    <li class="nav-item"><a href="my_works.php" class="nav-link">Mes Travaux</a></li>
-                    <li class="nav-item"><a href="my_grades.php" class="nav-link active">Mes Notes</a></li>
-                    <li class="nav-item"><a href="student_chat.php" class="nav-link">Chat</a></li>
-                    <li class="nav-item"><a href="../Auth/login.php" class="nav-link">Déconnexion</a></li>
+                    <li class="nav-item"><a href="/student" class="nav-link">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="/student/classes" class="nav-link">Mes Classes</a></li>
+                    <li class="nav-item"><a href="/student/works" class="nav-link">Mes Travaux</a></li>
+                    <li class="nav-item"><a href="/student/grades" class="nav-link active">Mes Notes</a></li>
+                    <li class="nav-item"><a href="/student/chat" class="nav-link">Chat</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Déconnexion</a></li>
                 </ul>
             </nav>
         </aside>
@@ -30,73 +209,54 @@
         <main class="main-content">
             <div class="header">
                 <h1>Mes Notes</h1>
-                <div class="user-info">Bienvenue, Sophie Dubois</div>
+                <div class="user-info">Bienvenue, <?= htmlspecialchars($_SESSION['name'] ?? 'Étudiant') ?></div>
             </div>
 
             <div class="content-section">
-                <h2 class="section-title">Résumé</h2>
+                <h2 class="section-title">Détail des notes</h2>
                 
-                <div style="text-align: center; padding: 30px; background-color: #f8f9fa; border-radius: 5px; margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 10px;">Moyenne générale</h3>
-                    <div style="font-size: 48px; font-weight: bold; color: var(--success-color);">16.5/20</div>
-                    <p>Meilleure note: 18/20 - Plus faible note: 15/20</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Matière</th>
+                                <th>Travail</th>
+                                <th>Note</th>
+                                <th>Appréciation</th>
+                                <th>Date</th>
+                                <th>Commentaire</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($grades) && !empty($grades)): ?>
+                                <?php foreach ($grades as $grade): ?>
+                                    <tr>
+                                        <td><strong><?= htmlspecialchars($grade['class_name'] ?? '') ?></strong></td>
+                                        <td><?= htmlspecialchars($grade['work_title'] ?? '') ?></td>
+                                        <td>
+                                            <?php 
+                                            $grade_value = $grade['grade'] ?? 0;
+                                            $badge_color = ($grade_value >= 16) ? 'success' : (($grade_value >= 14) ? 'warning' : 'danger');
+                                            ?>
+                                            <span class="badge badge-<?= $badge_color ?>"><?= $grade_value ?>/20</span>
+                                        </td>
+                                        <td><?= $grade_value >= 16 ? 'Excellent' : ($grade_value >= 14 ? 'Bien' : 'À améliorer') ?></td>
+                                        <td><?= date('d/m/Y', strtotime($grade['graded_at'] ?? '')) ?></td>
+                                        <td><?= htmlspecialchars($grade['comment'] ?? 'Pas de commentaire') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px;">
+                                        <div class="alert alert-info" style="margin-bottom: 0;">
+                                            Aucune note disponible pour le moment. Les notes apparaîtront ici une fois que vos travaux seront évalués.
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-
-            <div class="content-section">
-                <h2 class="section-title">Détails des notes</h2>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Matière</th>
-                            <th>Travail</th>
-                            <th>Note</th>
-                            <th>Commentaire</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>Mathématiques</strong><br>
-                                <small>Prof. Martin</small>
-                            </td>
-                            <td>Exercices équations second degré</td>
-                            <td>
-                                <div style="font-weight: bold; color: var(--success-color);">18/20</div>
-                            </td>
-                            <td>Excellent travail !</td>
-                            <td>19/01/2026</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>
-                                <strong>Physique</strong><br>
-                                <small>Prof. Durand</small>
-                            </td>
-                            <td>TP Électricité</td>
-                            <td>
-                                <div style="font-weight: bold; color: var(--warning-color);">15/20</div>
-                            </td>
-                            <td>Bon travail, mais manque de précision</td>
-                            <td>10/01/2026</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>
-                                <strong>Mathématiques</strong><br>
-                                <small>Prof. Martin</small>
-                            </td>
-                            <td>Devoir Géométrie</td>
-                            <td>
-                                <div style="font-weight: bold; color: var(--success-color);">16.5/20</div>
-                            </td>
-                            <td>Très bon raisonnement</td>
-                            <td>05/01/2026</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </main>
     </div>
