@@ -7,6 +7,7 @@ use app\models\DashboardStats;
 use app\models\RecentActivities;
 use app\models\Statistics;
 use PDO;
+use Exception;
 
 class ClassService{
     public function showclasses(){

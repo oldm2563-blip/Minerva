@@ -6,6 +6,8 @@ use app\services\ClassService;
 use app\services\StudentService;
 use app\core\Database;
 use PDO;
+use Exception;
+
 
     class TeacherController extends Controller{
         public function __construct() {

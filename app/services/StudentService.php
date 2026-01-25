@@ -9,7 +9,8 @@
     use app\models\EvaluationData;
     use app\services\MailerService;
     use PDO;
-    
+    use Exception;
+
     class StudentService{
         
         public function __construct() {
