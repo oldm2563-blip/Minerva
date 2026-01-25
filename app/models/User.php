@@ -12,14 +12,16 @@ class User
     private PDO $db;
 
     public function __construct(
-         $username,
+         $name,
+         $role,
          $email,
          $password,
-         $role
+         $id
     ) {
-        $this->username = $username;
+        $this->id = $id;
+        $this->username = $name;
         $this->email    = $email;
-        $this->password = password_hash('123456', PASSWORD_DEFAULT);
+        $this->password = $password;
         $this->role     = $role;
         $this->db = Database::getInstance();
     }
@@ -58,6 +60,12 @@ class User
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function create(){
+        $query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([$this->username, $this->email, $this->password, $this->role]);
     }
 
     public function logout(): void

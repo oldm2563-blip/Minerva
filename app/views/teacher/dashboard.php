@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mes Classes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - Enseignant</title>
     <link rel="stylesheet" href="/testmineva/css/style.css">
-
-    <style>
-        /* Reset and Base Styles */
+</head>
+<style>
+    /* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -560,217 +560,106 @@ input[type="file"]:hover {
     border-color: var(--primary-color);
 }
 
-        /* Small local helpers */
-        .hidden {
-            display: none;
-        }
-
-        .form-box {
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        .student-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .student-card {
-            background-color: #f8f9fa;
-            padding: 12px;
-            border-radius: 4px;
-        }
-    </style>
-</head>
+</style>
 <body>
-
-<div class="app-container">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-    <div class="sidebar-header">
-        <h1>Espace Enseignant</h1>
-    </div>
-
-    <nav class="sidebar-nav">
-        <ul>
-            <li class="nav-item">
-                <a href="/teacher" class="nav-link">Tableau de bord</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/classes" class="nav-link active">Mes Classes</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/works" class="nav-link">Travaux</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/evaluation" class="nav-link">Évaluation</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/attendance" class="nav-link">Présences</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/statistics" class="nav-link">Statistiques</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/teacher/chat" class="nav-link">Chat</a>
-            </li>
-
-            <li class="nav-item">
-                <a href="/logout" class="nav-link">Déconnexion</a>
-            </li>
-        </ul>
-    </nav>
-</aside>
-
-
-    <!-- MAIN -->
-    <main class="main-content">
-
-        <header class="header">
-            <h1>Gestion des classes</h1>
-            <div class="user-info">Bienvenue, Professeur</div>
-        </header>
-
-        <!-- ACTION BUTTONS -->
-        <section class="content-section">
-            <button class="btn" onclick="toggleForm('classForm')">Créer une classe</button>
-            <button class="btn btn-secondary" onclick="toggleForm('studentForm')">Créer un étudiant</button>
-        </section>
-
-        <!-- CREATE CLASS FORM -->
-        <section id="classForm" class="content-section hidden">
-            <div class="form-box">
-                <h2 class="section-title">Nouvelle classe</h2>
-
-                <form method="post" action="/teacher/create-class">
-                    <div class="form-group">
-                        <label class="form-label">Nom de la classe</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-
-                    <button type="submit" class="btn">Créer</button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleForm('classForm')">
-                        Annuler
-                    </button>
-                </form>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Espace Enseignant</h1>
             </div>
-        </section>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item"><a href="/teacher" class="nav-link active">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="/teacher/classes" class="nav-link">Mes Classes</a></li>
+                    <li class="nav-item"><a href="/teacher/works" class="nav-link">Travaux</a></li>
+                    <li class="nav-item"><a href="/teacher/evaluation" class="nav-link">Évaluation</a></li>
+                    <li class="nav-item"><a href="/teacher/attendance" class="nav-link">Présences</a></li>
+                    <li class="nav-item"><a href="/teacher/statistics" class="nav-link">Statistiques</a></li>
+                    <li class="nav-item"><a href="/teacher/chat" class="nav-link">Chat</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Déconnexion</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        <!-- CREATE STUDENT FORM -->
-        <section id="studentForm" class="content-section hidden">
-            <div class="form-box">
-                <h2 class="section-title">Nouvel étudiant</h2>
-
-                <form method="post" action="/teacher/create-student">
-                    <div class="form-group">
-                        <label class="form-label">Nom complet</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Classe</label>
-                        <select name="class_id" class="form-control" required>
-                            <option value="">Sélectionner une classe</option>
-                            <?php if(isset($classes) && !empty($classes)): ?>
-                                <?php foreach($classes as $class): ?>
-                                    <option value="<?php echo $class['id']; ?>"><?php echo htmlspecialchars($class['name']); ?></option>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn">Créer</button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleForm('studentForm')">
-                        Annuler
-                    </button>
-                </form>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Tableau de bord</h1>
+                <div class="user-info">Bienvenue, Prof. Martin</div>
             </div>
-        </section>
 
-        <!-- CLASSES LIST -->
-        <section class="content-section">
-
-            <h2 class="section-title">Mes classes</h2>
-
-            <?php if(isset($classes) && !empty($classes)): ?>
-                <?php foreach($classes as $class): ?>
+            <div class="content-section">
+                <h2 class="section-title">Aperçu</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title"><?php echo htmlspecialchars($class['name']); ?></h3>
-                            <span class="badge badge-primary">
-                                <?php 
-                                // Count students for this class
-                                $db = \app\core\Database::getInstance();
-                                $stmt = $db->prepare("SELECT COUNT(*) FROM class_students WHERE class_id = ?");
-                                $stmt->execute([$class['id']]);
-                                echo $stmt->fetchColumn() . ' étudiants';
-                                ?>
-                            </span>
-                        </div>
-
-                        <div class="student-list">
-                            <?php
-                            // Get students for this class
-                            $stmt = $db->prepare("
-                                SELECT u.name, u.email 
-                                FROM users u 
-                                JOIN class_students cs ON u.id = cs.student_id 
-                                WHERE cs.class_id = ? AND u.role = 'student'
-                            ");
-                            $stmt->execute([$class['id']]);
-                            $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            
-                            if(!empty($students)):
-                                foreach($students as $student):
-                            ?>
-                                <div class="student-card">
-                                    <strong><?php echo htmlspecialchars($student['name']); ?></strong><br>
-                                    <small><?php echo htmlspecialchars($student['email']); ?></small>
-                                </div>
+                        <h3>Classes</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);">
                             <?php 
-                                endforeach;
-                            else:
+                            $db = \app\core\Database::getInstance();
+                            $classStmt = $db->prepare("SELECT COUNT(*) FROM classes WHERE teacher_id = ?");
+                            $classStmt->execute([$_SESSION['id'] ?? 0]);
+                            echo $classStmt->fetchColumn(); 
                             ?>
-                                <p style="color: #6c757d; font-style: italic;">Aucun étudiant dans cette classe</p>
-                            <?php endif; ?>
-                        </div>
+                        </p>
                     </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="card">
-                    <p style="text-align: center; color: #6c757d;">Aucune classe créée. Cliquez sur "Créer une classe" pour commencer.</p>
+                    
+                    <div class="card">
+                        <h3>Étudiants</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);">
+                            <?php echo $statistics['total_students'] ?? 0; ?>
+                        </p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Moyenne générale</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);">
+                            <?php echo $statistics['average_grade'] ?? 0; ?>/20
+                        </p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>À évaluer</h3>
+                        <p style="font-size: 24px; font-weight: bold; color: var(--primary-color);">
+                            <?php echo $statistics['pending_assignments'] ?? 0; ?>
+                        </p>
+                    </div>
                 </div>
-            <?php endif; ?>
+            </div>
 
-        </section>
-
-    </main>
-</div>
-
-<!-- SIMPLE, SAFE JS -->
-<script>
-    function toggleForm(id) {
-        const el = document.getElementById(id);
-        el.classList.toggle('hidden');
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-</script>
-
+            <div class="content-section">
+                <h2 class="section-title">Dernières activités</h2>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Activité</th>
+                            <th>Classe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>21/01/2026</td>
+                            <td>Lucas Bernard a soumis un travail</td>
+                            <td>3ème A</td>
+                        </tr>
+                        <tr>
+                            <td>20/01/2026</td>
+                            <td>Création d'un nouveau travail</td>
+                            <td>3ème A</td>
+                        </tr>
+                        <tr>
+                            <td>19/01/2026</td>
+                            <td>Évaluation du travail de Sophie Dubois</td>
+                            <td>3ème A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

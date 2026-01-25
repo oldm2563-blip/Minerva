@@ -10,11 +10,13 @@ class Student extends User
     private $db;
 
     public function __construct(
-         $username,
+         $name,
+         $role,
          $email,
          $password,
+         $id = null
     ) {
-        parent::__construct($username, $email, $password, 'student');
+        parent::__construct($name, 'student', $email, $password, $id);
         $this->db = Database::getInstance();
     }
 

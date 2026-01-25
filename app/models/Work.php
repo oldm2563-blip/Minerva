@@ -40,10 +40,11 @@ class Work
     public function create()
     {
         $stmt = $this->db->prepare("
-            INSERT INTO works (class_id, teacher_id, title, description, file_path, due_date)
-            VALUES (:class_id, :teacher_id, :title, :description, :file_path, :due_date)
+            INSERT INTO works (class_id, teacher_id, title, description, file_path, due_date, created_at)
+            VALUES (:class_id, :teacher_id, :title, :description, :file_path, :due_date, NOW())
         ");
-        return $stmt->execute([
+        
+        $result = $stmt->execute([
             ':class_id'     => $this->classId,
             ':teacher_id'   => $this->teacherId,
             ':title'        => $this->title,
@@ -51,6 +52,12 @@ class Work
             ':file_path'    => $this->filePath,
             ':due_date'     => $this->dueDate
         ]);
+        
+        if ($result) {
+            $this->id = $this->db->lastInsertId();
+        }
+        
+        return $result;
     }
 
     public function read(int $id): ?self

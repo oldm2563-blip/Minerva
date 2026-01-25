@@ -1,5 +1,5 @@
 <?php
-namespace app\Models;
+namespace app\models;
 
 use app\core\Database;
 use PDO;
