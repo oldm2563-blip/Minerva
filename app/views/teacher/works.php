@@ -167,7 +167,7 @@
             
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item"><a href="dashboard.php" class="nav-link">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="dashboard2.php" class="nav-link">Tableau de bord</a></li>
                     <li class="nav-item"><a href="classes.php" class="nav-link">Mes Classes</a></li>
                     <li class="nav-item"><a href="works.php" class="nav-link active">Travaux</a></li>
                     <li class="nav-item"><a href="evaluation.php" class="nav-link">Évaluation</a></li>
@@ -179,7 +179,6 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <div class="header">
                 <h1>Gestion des Travaux</h1>
@@ -192,13 +191,11 @@
                     <button onclick="showCreateWorkModal()" class="btn">Créer un travail</button>
                 </div>
 
-                <!-- Travail 1 -->
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h3 class="card-title">Exercices sur les équations du second degré</h3>
-                                <span class="work-type exercice">Exercice</span>
                             </div>
                             <div class="work-actions">
                                 <button onclick="assignWork(1)" class="work-action-btn">Assigner</button>
@@ -213,16 +210,10 @@
                         
                         <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
                             <div>
-                                <strong>Matière :</strong> Mathématiques
-                            </div>
-                            <div>
-                                <strong>Classe :</strong> 3ème A
+                                <strong>Date d'assignation :</strong> 18/01/2026
                             </div>
                             <div>
                                 <strong>Étudiants :</strong> 4
-                            </div>
-                            <div>
-                                <strong>Échéance :</strong> 25/01/2026
                             </div>
                             <div>
                                 <strong>Statut :</strong> <span style="color: var(--success-color); font-weight: bold;">Actif</span>
@@ -241,13 +232,11 @@
                     </div>
                 </div>
 
-                <!-- Travail 2 -->
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h3 class="card-title">Leçon sur les fonctions</h3>
-                                <span class="work-type lecon">Leçon</span>
                             </div>
                             <div class="work-actions">
                                 <button onclick="assignWork(2)" class="work-action-btn">Assigner</button>
@@ -262,16 +251,10 @@
                         
                         <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
                             <div>
-                                <strong>Matière :</strong> Mathématiques
-                            </div>
-                            <div>
-                                <strong>Classe :</strong> 3ème A
+                                <strong>Date d'assignation :</strong> 20/01/2026
                             </div>
                             <div>
                                 <strong>Étudiants :</strong> 4
-                            </div>
-                            <div>
-                                <strong>Échéance :</strong> Non définie
                             </div>
                             <div>
                                 <strong>Statut :</strong> <span style="color: var(--warning-color); font-weight: bold;">En attente</span>
@@ -293,7 +276,6 @@
         </main>
     </div>
 
-    <!-- Modal pour créer un travail -->
     <div id="createWorkModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -308,33 +290,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Type de travail *</label>
-                    <select class="form-control" id="workType" required>
-                        <option value="">Sélectionner un type</option>
-                        <option value="exercice">Exercice</option>
-                        <option value="lecon">Leçon</option>
-                        <option value="document">Document</option>
-                        <option value="projet">Projet</option>
-                        <option value="devoir">Devoir maison</option>
-                        <option value="test">Test/Examen</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
                     <label class="form-label">Description *</label>
                     <textarea class="form-control" id="workDescription" rows="4" placeholder="Description détaillée du travail..." required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Matière *</label>
-                    <select class="form-control" id="workSubject" required>
-                        <option value="">Sélectionner une matière</option>
-                        <option value="mathematiques">Mathématiques</option>
-                        <option value="physique">Physique</option>
-                        <option value="chimie">Chimie</option>
-                        <option value="francais">Français</option>
-                        <option value="anglais">Anglais</option>
-                    </select>
                 </div>
                 
                 <div class="form-row" style="display: flex; gap: 15px;">
@@ -342,16 +299,6 @@
                         <label class="form-label">Date d'assignation</label>
                         <input type="date" class="form-control" id="workAssignDate">
                     </div>
-                    
-                    <div class="form-group" style="flex: 1;">
-                        <label class="form-label">Date limite</label>
-                        <input type="date" class="form-control" id="workDeadline">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Instructions supplémentaires</label>
-                    <textarea class="form-control" id="workInstructions" rows="3" placeholder="Instructions spécifiques..."></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -372,7 +319,6 @@
         </div>
     </div>
 
-    <!-- Modal pour assigner un travail -->
     <div id="assignWorkModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -421,7 +367,6 @@
         </div>
     </div>
 
-    <!-- Modal pour modifier un travail -->
     <div id="editWorkModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -438,23 +383,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Type de travail *</label>
-                    <select class="form-control" id="editWorkType" required>
-                        <option value="exercice">Exercice</option>
-                        <option value="lecon">Leçon</option>
-                        <option value="document">Document</option>
-                        <option value="projet">Projet</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
                     <label class="form-label">Description *</label>
                     <textarea class="form-control" id="editWorkDescription" rows="4" required></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Date limite</label>
-                    <input type="date" class="form-control" id="editWorkDeadline">
+                    <label class="form-label">Date d'assignation</label>
+                    <input type="date" class="form-control" id="editWorkAssignDate">
                 </div>
                 
                 <div class="modal-footer">
@@ -466,11 +401,9 @@
     </div>
 
     <script>
-        // Variables globales
         let currentWorkId = null;
         let selectedFiles = [];
 
-        // Fonctions pour afficher les modals
         function showCreateWorkModal() {
             document.getElementById('createWorkModal').style.display = 'block';
         }
@@ -478,7 +411,6 @@
         function assignWork(workId) {
             currentWorkId = workId;
             
-            // Simulation : récupérer le titre du travail
             const works = {
                 1: "Exercices sur les équations du second degré",
                 2: "Leçon sur les fonctions"
@@ -492,19 +424,16 @@
         function editWork(workId) {
             currentWorkId = workId;
             
-            // Simulation : récupérer les données du travail
             const works = {
                 1: {
                     title: "Exercices sur les équations du second degré",
-                    type: "exercice",
                     description: "Résoudre les exercices 1 à 10 du manuel page 45",
-                    deadline: "2026-01-25"
+                    assignDate: "2026-01-18"
                 },
                 2: {
                     title: "Leçon sur les fonctions",
-                    type: "lecon",
                     description: "Lire et comprendre le chapitre 3 sur les fonctions linéaires",
-                    deadline: ""
+                    assignDate: "2026-01-20"
                 }
             };
             
@@ -512,9 +441,8 @@
             if (work) {
                 document.getElementById('editWorkId').value = workId;
                 document.getElementById('editWorkTitle').value = work.title;
-                document.getElementById('editWorkType').value = work.type;
                 document.getElementById('editWorkDescription').value = work.description;
-                document.getElementById('editWorkDeadline').value = work.deadline;
+                document.getElementById('editWorkAssignDate').value = work.assignDate;
                 document.getElementById('editWorkModal').style.display = 'block';
             }
         }
@@ -522,23 +450,19 @@
         function deleteWork(workId) {
             if (confirm(`Êtes-vous sûr de vouloir supprimer ce travail ?\n\nToutes les soumissions associées seront également supprimées.\nCette action est irréversible.`)) {
                 alert(`Travail ${workId} supprimé avec succès !`);
-                // Simulation : rechargement de la page
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             }
         }
         
-        // Fonction pour fermer les modals
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
         
-        // Fonction pour charger les étudiants d'une classe
         function loadStudentsForClass() {
             const classId = document.getElementById('assignClass').value;
             
-            // Simulation : étudiants par classe
             const studentsByClass = {
                 1: [
                     { id: 1, name: "Sophie Dubois", email: "sophie.dubois@school.com" },
@@ -581,7 +505,6 @@
             studentsContainer.innerHTML = html;
         }
         
-        // Fonctions pour sélectionner/désélectionner tous les étudiants
         function selectAllStudents() {
             const checkboxes = document.querySelectorAll('#studentsList input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
@@ -596,7 +519,6 @@
             });
         }
         
-        // Fonction pour afficher les fichiers sélectionnés
         function displaySelectedFiles() {
             const filesInput = document.getElementById('workFiles');
             const filesContainer = document.getElementById('selectedFiles');
@@ -632,31 +554,25 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
         
-        // Gestion des formulaires
         document.getElementById('createWorkForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const title = document.getElementById('workTitle').value;
-            const type = document.getElementById('workType').value;
             const description = document.getElementById('workDescription').value;
-            const subject = document.getElementById('workSubject').value;
             
-            if (!title || !type || !description || !subject) {
+            if (!title || !description) {
                 alert('Veuillez remplir tous les champs obligatoires !');
                 return;
             }
             
-            // Simulation de création de travail
             alert(`Travail créé avec succès !\n\n"${title}"\n\nVoulez-vous maintenant assigner ce travail à des étudiants ?`);
             
-            // Réinitialiser le formulaire
             this.reset();
             selectedFiles = [];
             document.getElementById('selectedFiles').innerHTML = '';
             
             closeModal('createWorkModal');
             
-            // Rafraîchir la page après 2 secondes
             setTimeout(() => {
                 location.reload();
             }, 2000);
@@ -678,22 +594,18 @@
                 return;
             }
             
-            // Récupérer les noms des étudiants sélectionnés
             const studentNames = Array.from(selectedStudents).map(checkbox => {
                 const label = checkbox.nextElementSibling;
                 return label.querySelector('strong').textContent;
             });
             
-            // Simulation d'assignation
             alert(`Travail assigné avec succès à ${studentNames.length} étudiant(s) !\n\nÉtudiants : ${studentNames.join(', ')}`);
             
-            // Réinitialiser le formulaire
             this.reset();
             document.getElementById('studentsList').innerHTML = '<p style="color: #666; text-align: center;">Sélectionnez d\'abord une classe</p>';
             
             closeModal('assignWorkModal');
             
-            // Rafraîchir la page après 1 seconde
             setTimeout(() => {
                 location.reload();
             }, 1000);
@@ -705,18 +617,15 @@
             const workId = document.getElementById('editWorkId').value;
             const title = document.getElementById('editWorkTitle').value;
             
-            // Simulation de mise à jour
             alert(`Travail ${workId} modifié avec succès !\n\n"${title}"`);
             
             closeModal('editWorkModal');
             
-            // Rafraîchir la page après 1 seconde
             setTimeout(() => {
                 location.reload();
             }, 1000);
         });
         
-        // Fermer les modals en cliquant en dehors
         window.onclick = function(event) {
             const modals = document.querySelectorAll('.modal');
             modals.forEach(modal => {
@@ -726,7 +635,6 @@
             });
         }
         
-        // Fermer les modals avec la touche Échap
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 const modals = document.querySelectorAll('.modal');
@@ -738,7 +646,6 @@
             }
         });
         
-        // Définir la date d'aujourd'hui comme valeur par défaut pour les champs date
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             const assignDate = document.getElementById('workAssignDate');
@@ -746,12 +653,9 @@
                 assignDate.value = today;
             }
             
-            // Définir la date limite par défaut à 7 jours
-            const deadline = new Date();
-            deadline.setDate(deadline.getDate() + 7);
-            const deadlineInput = document.getElementById('workDeadline');
-            if (deadlineInput) {
-                deadlineInput.value = deadline.toISOString().split('T')[0];
+            const editAssignDate = document.getElementById('editWorkAssignDate');
+            if (editAssignDate) {
+                editAssignDate.value = today;
             }
         });
     </script>

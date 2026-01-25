@@ -46,7 +46,7 @@
     <nav class="sidebar-nav">
         <ul>
             <li class="nav-item">
-                <a href="dashboard.php" class="nav-link">Tableau de bord</a>
+                <a href="dashboard2.php" class="nav-link">Tableau de bord</a>
             </li>
 
             <li class="nav-item">

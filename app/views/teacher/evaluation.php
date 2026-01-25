@@ -16,7 +16,7 @@
             
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item"><a href="dashboard.php" class="nav-link">Tableau de bord</a></li>
+                    <li class="nav-item"><a href="dashboard2.php" class="nav-link">Tableau de bord</a></li>
                     <li class="nav-item"><a href="classes.php" class="nav-link">Mes Classes</a></li>
                     <li class="nav-item"><a href="works.php" class="nav-link">Travaux</a></li>
                     <li class="nav-item"><a href="evaluation.php" class="nav-link active">Évaluation</a></li>
