@@ -63,6 +63,17 @@ class ClassStudent {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getStudentDetailsByClass(int $class_id) {
+        $stmt = $this->db->prepare("
+            SELECT u.id, u.name, u.email 
+            FROM users u
+            INNER JOIN class_students cs ON u.id = cs.student_id
+            WHERE cs.class_id = :class_id AND u.role = 'student'
+        ");
+        $stmt->execute([':class_id' => $class_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     
     public function getClassesByStudent(int $student_id) {
         $stmt = $this->db->prepare("SELECT * FROM class_students WHERE student_id = :student_id");

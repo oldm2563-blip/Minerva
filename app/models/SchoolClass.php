@@ -17,6 +17,8 @@ class SchoolClass
         $this->name      = $name;
         $this->teacherId = $teacherId;
         $this->db = Database::getInstance();
+        
+        error_log("SchoolClass constructor - Name: '$name', Teacher ID: '$teacherId'");
     }
 
 
@@ -43,7 +45,10 @@ class SchoolClass
     }
     
     public function createclass(){
+        
         $stmt = $this->db->prepare("INSERT INTO classes (name, teacher_id) VALUES (? , ?)");
-        $stmt->execute([$this->name , $this->teacherId]);
+        $result = $stmt->execute([$this->name , $this->teacherId]);
+        
+        return $result;
     }
 }

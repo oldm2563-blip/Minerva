@@ -19,7 +19,7 @@ class User
     ) {
         $this->username = $username;
         $this->email    = $email;
-        $this->password = password_hash('123456', PASSWORD_DEFAULT);
+        $this->password = $password ? password_hash($password, PASSWORD_DEFAULT) : null;
         $this->role     = $role;
         $this->db = Database::getInstance();
     }
@@ -58,6 +58,17 @@ class User
         $stmt = $this->db->prepare($query);
         $stmt->execute([$this->email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function create(){
+        $query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            $this->username,
+            $this->email,
+            $this->password,
+            $this->role
+        ]);
     }
 
     public function logout(): void
