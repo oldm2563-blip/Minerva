@@ -19,4 +19,25 @@ use app\core\Controller;
                 $this->render("Auth/login", ['error' => $redirect]);
             }
         }
+        
+        public function registerform(){
+            $error = [];
+            $this->render("Auth/register", ['error' => $error]);
+        }
+        
+        public function register(){
+            $auth = new Authservice();
+            $result = $auth->register();
+            if($result === true){
+                $this->render("Auth/login", ['error' => ['Inscription réussie ! Vous pouvez maintenant vous connecter.']]);
+            }
+            else{
+                $this->render("Auth/register", ['error' => $result]);
+            }
+        }
+        
+        public function logout(){
+            session_destroy();
+            $this->redirect('/');
+        }
     }
